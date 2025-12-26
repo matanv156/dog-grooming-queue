@@ -73,14 +73,15 @@ public partial class DogGroomingContext : DbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__Users__3214EC077B4518CF");
+            entity.HasKey(e => e.Id).HasName("PK__tmp_ms_x__3214EC0723653776");
 
-            entity.HasIndex(e => e.Username, "UQ__Users__536C85E42CC9388E").IsUnique();
+            entity.HasIndex(e => e.Username, "UQ__tmp_ms_x__536C85E49BADD366").IsUnique();
 
             entity.Property(e => e.CreatedAt)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
             entity.Property(e => e.FirstName).HasMaxLength(50);
+            entity.Property(e => e.LastName).HasMaxLength(50);
             entity.Property(e => e.PasswordHash).HasMaxLength(255);
             entity.Property(e => e.Username).HasMaxLength(50);
         });

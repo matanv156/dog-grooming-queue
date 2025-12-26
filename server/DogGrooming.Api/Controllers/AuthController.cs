@@ -20,7 +20,7 @@ namespace DogGrooming.Api.Controllers
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register(RegisterDto dto)
+        public async Task<IActionResult> Register([FromBody]RegisterDto dto)
         {
             var existingUser = await _data.GetByUsernameAsync(dto.Username);
             if (existingUser != null)
@@ -32,7 +32,8 @@ namespace DogGrooming.Api.Controllers
             {
                 Username = dto.Username,
                 PasswordHash = passwordHash,
-                FirstName = dto.FirstName
+                FirstName = dto.FirstName,
+                LastName = dto.LastName
             };
 
             await _data.AddAsync(user);
@@ -40,7 +41,7 @@ namespace DogGrooming.Api.Controllers
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login(LoginDto dto)
+        public async Task<IActionResult> Login([FromBody]LoginDto dto)
         {
             var user = await _data.GetByUsernameAsync(dto.Username);
             if (user == null || !EncryptionUtils.VerifyPassword(dto.Password, user.PasswordHash))
